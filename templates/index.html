@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demand Forecasting</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .container:hover { transform: translateY(-5px); }
+
+        h2 {
+            text-align: center;
+            color: #2a2a72;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            margin-top: 25px;
+            color: #555;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        label { font-weight: bold; }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover { background-color: #0056b3; transform: scale(1.03); }
+
+        .result {
+            margin-top: 25px;
+            padding: 18px;
+            background-color: #e9f5ff;
+            border-left: 6px solid #007BFF;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Demand Forecast Dashboard</h2>
+
+    <form action="/predict" method="post">
+
+        <h3>Product Details</h3>
+        <input type="text" name="Price" placeholder="Price">
+        <input type="text" name="Discount" placeholder="Discount (%)">
+        <input type="text" name="Inventory Level" placeholder="Inventory Level">
+        <input type="text" name="Competitor Pricing" placeholder="Competitor Pricing">
+
+        <h3>Sales Information</h3>
+        <input type="text" name="lag_1_demand" placeholder="Last Day Demand">
+        <input type="text" name="lag_7_demand" placeholder="Last Week Demand">
+        <input type="text" name="lag_30_demand" placeholder="Last Month Demand">
+
+        <h3>Marketing</h3>
+        <label>Promotion:</label>
+        <select name="Promotion">
+            <option value="0">No Promotion</option>
+            <option value="1">Single Promotion</option>
+            <option value="2">Double Promotion</option>
+            <option value="3">Festival + Ads + Discount</option>
+        </select>
+
+        <input type="text" name="Seasonality" placeholder="Seasonality (1-4)">
+        <input type="text" name="Month" placeholder="Month (1-12)">
+
+        <button type="submit">Predict Demand</button>
+    </form>
+
+    {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+
+</div>
+</body>
+</html>
